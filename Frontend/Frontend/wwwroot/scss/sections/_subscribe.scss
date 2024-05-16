@@ -1,0 +1,146 @@
+#subscribe {
+    background-color: $gray-100;
+    padding-bottom: 5rem;
+
+    .container {
+        .title {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 5rem;
+            margin-left: 10rem;
+
+
+            h2 {
+                @include h1;
+            }
+
+            img {
+                margin-right: 4rem;
+
+                @include lg {
+                    margin-right: 2rem;
+                    margin-left: 2rem;
+                }
+            }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+
+            .alternative {
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                justify-content: center;
+                margin-top: 2rem;
+
+                @include lg {
+                    display: grid;
+                    grid-template-columns: 1fr 3fr;
+                    margin-top: 2rem;
+                    margin-bottom: 2rem;
+                }
+
+
+                h4 {
+                    @include h4;
+                    margin-left: 9.87rem;
+                }
+
+                .options {
+                    display: grid;
+                    grid-template-columns: repeat(3, 1fr);
+
+
+                    @include lg {
+                        display: grid;
+                        grid-template-columns: repeat(3, 1fr);
+                        margin-right: 10rem;
+                    }
+
+                    .checkbox-group {
+
+
+                        .input-group {
+                            display: flex;
+
+                            label {
+                                margin-left: 1rem;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .form-email {
+                .input-group {
+                    display: flex;
+                    position: relative;
+                    justify-content: center;
+
+
+                    @include lg {
+                        display: flex;
+                        position: relative;
+                        gap: 1rem;
+                        margin-top: 2rem;
+                        margin-left: 7rem;
+                        padding-bottom: 0.5rem;
+                    }
+
+                    i {
+                        position: absolute;
+                        top: 3.4rem;
+                        left: 1.5rem;
+                        color: $gray-500;
+
+                        @include lg {
+                            position: absolute;
+                            top: 1.3rem;
+                            left: 4.5rem;
+                            color: $gray-500;
+                        }
+                    }
+
+                    input {
+                        padding-right: 20rem;
+                        padding-left: 3rem;
+                        
+                        margin-top: 2rem;
+                        margin-bottom: 1rem;
+
+                        @include lg {
+                            padding-right: 20rem;
+                            padding-left: 3rem;
+                            margin-left: 3rem;
+                            margin-bottom: 1rem;
+                        }
+                    }
+
+                    .btn-theme {
+                        border-radius: 10%;
+                        margin-bottom: 2rem;
+
+
+                        @include lg {
+                            border-radius: 10%;
+                            
+                        }
+                    }
+                }
+
+                span {
+                    margin-top: 2rem;
+                    @include text-s;
+                    color: $gray-600;
+
+                    @include lg{
+                        margin-left: 10rem;
+                    }
+                }
+            }
+        }
+    }
+}
