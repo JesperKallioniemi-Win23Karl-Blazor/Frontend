@@ -1,6 +1,21 @@
-﻿@inherits LayoutComponentBase
+﻿@using Frontend.Components.Sections
+@inherits LayoutComponentBase
 
-
+<body>
+    <header>
+        </header>
+    <div class="container">
+        
+        <div class="wrapper">
+            <Header />
+            <main>
+                @Body
+            </main>
+            <Footer />
+        </div>
+      
+    </div>
+</body>
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
