@@ -1,4 +1,4 @@
-﻿@page "/signin"
+﻿@* @page "/signin"
 
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Authentication
@@ -106,6 +106,120 @@
         public string Password { get; set; } = "";
 
         [Display(Name = "Remember me?")]
+        public bool RememberMe { get; set; }
+    }
+}
+ *@
+
+@page "/signin"
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Identity
+@using Frontend.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject NavigationManager NavigationManager
+
+<PageTitle>Log in</PageTitle>
+
+
+<div id="signin">
+    <div class="container">
+        <h1>Welcome Back</h1>
+        <p>Don't have an account yet? <a href="/signup">Sign up here</a></p>
+
+
+        <EditForm Model="@signInModel" method="post" OnValidSubmit="HandleLogin" FormName="loginForm" class="content">
+            <DataAnnotationsValidator />
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger">@errorMessage</div>
+            }
+
+            <div id="form-email">
+                <label for="email">Email</label>
+                <InputText @bind-Value="signInModel.Email" id="email" class="form-control" autocomplete="username" aria-required="true" />
+                <ValidationMessage For="() => signInModel.Email" class="text-danger" />
+            </div>
+
+            <div id="form-password">
+                <label for="password">Password</label>
+                <InputText type="password" @bind-Value="signInModel.Password" id="password" class="form-control" autocomplete="current-password" aria-required="true" />
+                <ValidationMessage For="() => signInModel.Password" class="text-danger" />
+            </div>
+
+            <div id="form-remember">
+                <label class="form-check-label">
+                    <InputCheckbox @bind-Value="signInModel.RememberMe" class="form-check-input" /> Remember me
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </EditForm>
+
+        <div class="text-center mt-3">
+            <p>
+                <a href="Account/ForgotPassword">Forgot your password?</a>
+            </p>
+            <p>
+                <a href="@(NavigationManager.GetUriWithQueryParameters("Account/Register", new Dictionary<string, object?> { ["ReturnUrl"] = ReturnUrl }))">Register as a new user</a>
+            </p>
+            <p>
+                <a href="Account/ResendEmailConfirmation">Resend email confirmation</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+@code {
+    private SignInModel signInModel = new SignInModel();
+    private string errorMessage = "";
+
+    [CascadingParameter]
+    private HttpContext HttpContext { get; set; } = default!;
+
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (HttpMethods.IsGet(HttpContext.Request.Method))
+        {
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+        }
+    }
+
+    private async Task HandleLogin()
+    {
+        var result = await SignInManager.PasswordSignInAsync(signInModel.Email, signInModel.Password, signInModel.RememberMe, lockoutOnFailure: false);
+        if (result.Succeeded)
+        {
+            NavigationManager.NavigateTo(ReturnUrl ?? "/");
+        }
+        else
+        {
+            errorMessage = "Error: Invalid login attempt.";
+        }
+    }
+
+    public class SignInModel
+    {
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress]
+        [Display(Name = "Email", Prompt = "Enter your email address", Order = 0)]
+        public string Email { get; set; } = "";
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password", Prompt = "Enter your password", Order = 1)]
+        public string Password { get; set; } = "";
+
+        [Display(Name = "Remember me?")]
+
         public bool RememberMe { get; set; }
     }
 }

@@ -17,8 +17,7 @@
             width: 30%
         }
 
-        form {
-            padding: 1rem;
+ 
             
             .content{
                 display: grid;
@@ -28,7 +27,23 @@
 
                 #form-email { grid-area: email; }
                 #form-password { grid-area: password; }
-                #form-remember { grid-area: remember; }
+                #form-remember { 
+                    grid-area: remember;
+                   
+                    
+                        .form-check-label {
+                            
+
+                            .form-check-input {
+                                margin-right: 0.5rem;
+
+                                height: 5px !important;
+
+
+                            }
+                    }
+
+                }
                 #form-button { grid-area: button; }
                 #form-forgot-password { 
                     grid-area: forgot;
@@ -65,4 +80,3 @@
             }
         }
     }
-}
