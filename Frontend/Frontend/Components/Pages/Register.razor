@@ -97,19 +97,7 @@
 
     private sealed class InputModel
     {
-        
-        [Required(ErrorMessage = "Please, fill in your first name")]
-        [DataType(DataType.Text)]
-        [Display(Name = "First Name", Prompt = "Enter your first name", Order = 0)]
-        public string FirstName { get; set; } = "";
-
-        [Required(ErrorMessage = "Please, fill in your last name")]
-        [DataType(DataType.Text)]
-        [Display(Name = "First Name", Prompt = "Enter your first name", Order = 1)]
-        public string LastName { get; set; } = "";
-
-
-        [Required(ErrorMessage = "Invalid Email or Password")]
+        [Required]
         [EmailAddress]
         [Display(Name = "Email", Prompt = "Enter your mail")]
         public string Email { get; set; } = "";
