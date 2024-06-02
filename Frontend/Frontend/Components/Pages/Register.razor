@@ -17,31 +17,46 @@
 
 <PageTitle>Register</PageTitle>
 
-<h1>Register</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register">
+<div id="signup">
+    <div class="container">
+        <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register" class="signup-editForm">
             <DataAnnotationsValidator />
             <h2>Create a new account.</h2>
-            <hr />
+            
             <ValidationSummary class="text-danger" role="alert" />
-            <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label for="email">Email</label>
-                <ValidationMessage For="() => Input.Email" class="text-danger" />
+            <div class="form-signup">
+
+                 <div  id="form-firstname">
+                     <InputText @bind-Value="Input.FirstName" class="form-control input-group" autocomplete="givenname" aria-required="true" placeholder="First name" />  
+                     <label for="first-name">First Name</label>
+                     <ValidationMessage For="() => Input.FirstName" class="text-danger" />
+                 </div>
+
+                 <div  id="form-lastname">
+                        <InputText @bind-Value="Input.LastName" class="form-control input-group" autocomplete="familyname" aria-required="true" placeholder="Last name" />
+                        <label for="last-name">Last Name</label>
+                        <ValidationMessage For="() => Input.LastName" class="text-danger" />
+                 </div>
+
+                 <div  id="form-email">
+                     <InputText @bind-Value="Input.Email" class="form-control input-group " autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                     <label for="email">Email</label>
+                     <ValidationMessage For="() => Input.Email" class="text-danger" />
+                 </div>
+                 <div  id="form-password">
+                     <InputText type="password" @bind-Value="Input.Password" class="form-control input-group" autocomplete="new-password" aria-required="true" placeholder="password" />
+                     <label for="password">Password</label>
+                     <ValidationMessage For="() => Input.Password" class="text-danger" />
+                 </div>
+                 <div  id="form-confirm">
+                     <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control input-group" autocomplete="new-password" aria-required="true" placeholder="password" />
+                     <label for="confirm-password">Confirm Password</label>
+                     <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+                 </div>
             </div>
-            <div class="form-floating mb-3">
-                <InputText type="password" @bind-Value="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label for="password">Password</label>
-                <ValidationMessage For="() => Input.Password" class="text-danger" />
-            </div>
-            <div class="form-floating mb-3">
-                <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label for="confirm-password">Confirm Password</label>
-                <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
-            </div>
-            <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button type="submit" class="form-submit btn btn-lg btn-primary">Register</button>
+
         </EditForm>
     </div>
 
@@ -58,7 +73,7 @@
 
     public async Task RegisterUser(EditContext editContext)
     {
-        var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+        var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, };
 
         var result = await UserManager.CreateAsync(user, Input.Password);
 
@@ -66,8 +81,6 @@
         {
             return;
         }
-
-
 
         if (UserManager.Options.SignIn.RequireConfirmedAccount)
         {
@@ -84,20 +97,37 @@
 
     private sealed class InputModel
     {
-        [Required]
+        
+        [Required(ErrorMessage = "Please, fill in your first name")]
+        [DataType(DataType.Text)]
+        [Display(Name = "First Name", Prompt = "Enter your first name", Order = 0)]
+        public string FirstName { get; set; } = "";
+
+        [Required(ErrorMessage = "Please, fill in your last name")]
+        [DataType(DataType.Text)]
+        [Display(Name = "First Name", Prompt = "Enter your first name", Order = 1)]
+        public string LastName { get; set; } = "";
+
+
+        [Required(ErrorMessage = "Invalid Email or Password")]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Email", Prompt = "Enter your mail")]
         public string Email { get; set; } = "";
 
-        [Required]
+        [Required(ErrorMessage = "Invalid Email or Password")]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", Prompt = "Enter your Password")]
         public string Password { get; set; } = "";
 
+        [Required(ErrorMessage = "Invalid Email or Password")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = "";
+
+
     }
 }
+
+

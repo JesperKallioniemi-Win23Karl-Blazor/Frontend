@@ -430,14 +430,14 @@ a:hover {
   border-radius: 50%;
 }
 
-form {
+form .signup-form {
   width: 100%;
   display: grid;
 }
-form .input-group {
+form .signup-form .input-group {
   display: grid;
 }
-form .checkbox span.field-validation-error {
+form .signup-form .checkbox span.field-validation-error {
   position: static;
   top: 0;
   right: 0;
@@ -448,57 +448,57 @@ form .checkbox span.field-validation-error {
   font-family: "Manrope", sans-serif;
   font-size: 14px !important;
 }
-form .checkbox-group {
+form .signup-form .checkbox-group {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 0.5rem;
 }
-form .checkbox-group input [type=checkbox] {
+form .signup-form .checkbox-group input [type=checkbox] {
   width: 1.2rem;
   height: 1.2rem;
   border: 0.063rem solid red;
 }
-form .checkbox-group label {
+form .signup-form .checkbox-group label {
   margin: 0;
   font-weight: 400;
 }
-form label {
+form .signup-form label {
   margin: 0.188rem;
   font-weight: 700;
 }
-form input {
+form .signup-form input {
   padding: 1rem;
   border-radius: 0.5rem !important;
   border: 0.063rem solid #D4D7E5;
 }
-form input::placeholder {
+form .signup-form input::placeholder {
   opacity: 0.4;
 }
-form input.input-validation-error {
+form .signup-form input.input-validation-error {
   border: 0.063rem solid #EF4444 !important;
   color: #EF4444 !important;
 }
-form input.input-validation-error::placeholder {
+form .signup-form input.input-validation-error::placeholder {
   color: #EF4444 !important;
 }
-form textarea {
+form .signup-form textarea {
   padding: 1rem;
   border-radius: 0.5rem !important;
   border: 0.063rem solid #D4D7E5;
   resize: none;
 }
-form textarea::placeholder {
+form .signup-form textarea::placeholder {
   opacity: 0.4;
 }
-form textarea.input-validation-error {
+form .signup-form textarea.input-validation-error {
   border: 0.063rem solid #EF4444 !important;
   color: #EF4444 !important;
 }
-form textarea.input-validation-error::placeholder {
+form .signup-form textarea.input-validation-error::placeholder {
   color: #EF4444 !important;
 }
-form span.field-validation-error {
+form .signup-form span.field-validation-error {
   position: absolute;
   top: 0;
   right: 0;
@@ -832,60 +832,55 @@ footer .container .social-media a i {
 }
 
 #signup {
-  height: 100%;
+  min-height: 100vh;
 }
 #signup .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  min-height: 100vh;
 }
-@media (min-width: 992px) {
-  #signup .container {
-    width: 60%;
-  }
+#signup .container .signup-editForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
-@media (min-width: 1200px) {
-  #signup .container {
-    width: 40%;
-  }
-}
-#signup .container form {
-  padding: 1rem;
-}
-#signup .container form .content {
+#signup .container .signup-editForm .form-signup {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem 2rem;
-  grid-template-columns: 1fr;
-  grid-template-areas: "firstname" "lastname" "email" "password" "confirm" "terms" "button";
+  grid-template-areas: "firstName lastName" "email email" "password password" "confirm confirm";
 }
-@media (min-width: 768px) {
-  #signup .container form .content {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: "firstname lastname" "email email" "password password" "confirm confirm" "terms terms" "button button";
-  }
+#signup .container .signup-editForm .form-signup #form-firstname {
+  grid-area: firstName;
 }
-#signup .container form .content #form-firstname {
-  grid-area: firstname;
+#signup .container .signup-editForm .form-signup #form-firstname label {
+  margin: 0.188rem;
 }
-#signup .container form .content #form-lastname {
-  grid-area: lastname;
+#signup .container .signup-editForm .form-signup #form-lastname {
+  grid-area: lastName;
 }
-#signup .container form .content #form-email {
+#signup .container .signup-editForm .form-signup #form-lastname label {
+  margin: 0.188rem;
+}
+#signup .container .signup-editForm .form-signup #form-email {
   grid-area: email;
 }
-#signup .container form .content #form-password {
+#signup .container .signup-editForm .form-signup #form-email label {
+  margin: 0.188rem;
+}
+#signup .container .signup-editForm .form-signup #form-password {
   grid-area: password;
 }
-#signup .container form .content #form-confirm {
+#signup .container .signup-editForm .form-signup #form-password label {
+  margin: 0.188rem;
+}
+#signup .container .signup-editForm .form-signup #form-confirm {
   grid-area: confirm;
 }
-#signup .container form .content #form-terms {
-  grid-area: terms;
-  padding: 1rem 0;
-}
-#signup .container form .content #form-submit {
-  grid-area: button;
+#signup .container .signup-editForm .form-signup #form-confirm label {
+  margin: 0.188rem;
 }
 
 #signin {

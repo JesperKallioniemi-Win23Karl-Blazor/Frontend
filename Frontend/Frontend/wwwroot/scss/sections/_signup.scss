@@ -1,63 +1,76 @@
 #signup {
-    height: 100%;
+    min-height: 100vh;
+
 
     .container {
-        display: flex;
+
+        display:flex;
         justify-content: center;
         align-items: center;
-        height: 100%;
+        min-height: 100vh;
+        
+        .signup-editForm{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
 
-        @include lg {
-            width: 60%
-        }
-
-        @include xl {
-            width: 40%
-        }
-
-        form {
-            padding: 1rem;
-
-            .content {
+            .form-signup{
                 display: grid;
+                grid-template-columns: 1fr 1fr;
                 gap: 1rem 2rem;
-                grid-template-columns: 1fr;
-                grid-template-areas: "firstname" "lastname" "email" "password" "confirm" "terms" "button";
+                grid-template-areas:
+                    "firstName lastName"
+                    "email email"
+                    "password password"
+                    "confirm confirm";
 
-                @include md {
-                    grid-template-columns: 1fr 1fr;
-                    grid-template-areas: "firstname lastname" "email email" "password password" "confirm confirm" "terms terms" "button button";
+                #form-firstname{
+                    grid-area: firstName;
+
+                    label{
+                        margin: 0.188rem;
+                    }
+                }
+                
+                #form-lastname{
+                    grid-area: lastName;
+
+                    label{
+                        margin: 0.188rem;
+                    }
                 }
 
-                #form-firstname {
-                    grid-area: firstname;
-                }
-
-                #form-lastname {
-                    grid-area: lastname;
-                }
-
-                #form-email {
+                #form-email{
                     grid-area: email;
+
+                    label{
+                        margin: 0.188rem;
+                    }
                 }
 
-                #form-password {
+                #form-password{
                     grid-area: password;
+
+                    label{
+                        margin: 0.188rem;
+                    }
                 }
 
-                #form-confirm {
+                #form-confirm{
                     grid-area: confirm;
+
+                    label{
+                        margin: 0.188rem;
+                    }
                 }
 
-                #form-terms {
-                    grid-area: terms;
-                    padding: 1rem 0;
-                }
+                
 
-                #form-submit {
-                    grid-area: button;
-                }
             }
+
         }
+
     }
+
 }
