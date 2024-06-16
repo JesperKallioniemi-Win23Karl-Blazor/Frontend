@@ -4,8 +4,62 @@
 @using System.Net.Http.Json
 @inject HttpClient Http
 
-<h3>Courses</h3>
 
+
+@if (courses == null)
+{
+    <p class="text-center"><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        @foreach (var course in courses)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    @if (course.IsBestseller)
+                    {
+                        <div class="badge bg-success position-absolute" style="top: 10px; right: 10px;">Best Seller</div>
+                    }
+
+                    <img src="@course.ImageUri" class="card-img-top" alt="@course.Title">
+
+                    <div class="card-body" onclick="location.href='/courses/@course.Id'">
+                        <h5 class="card-title">@course.Title</h5>
+                        <p class="card-text text-muted">By @string.Join(", ", course.Authors!.Select(a => a.Name))</p>
+                        @if (course.Prices != null)
+                        {
+                            <div class="pricing">
+                                @if (course.Prices.Discount > 0)
+                                {
+                                    <p class="text-danger">
+                                        @course.Prices.Currency @course.Prices.Discount
+                                        <span class="text-muted text-decoration-line-through">@course.Prices.Currency @course.Prices.Price</span>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="text-primary">@course.Prices.Currency @course.Prices.Price</p>
+                                }
+                            </div>
+                        }
+                        <div class="footer d-flex justify-content-between">
+                            <div class="hours">
+                                <i class="fa-regular fa-clock"></i> @course.Hours hours
+                            </div>
+                            <div class="likes">
+                                <i class="fa-regular fa-thumbs-up"></i> @course.LikesInProcent (@course.Likes)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+        }
+    }
 @code {
     private List<Course>? courses;
 
@@ -37,7 +91,7 @@
         }"
             };
 
-        var response = await Http.PostAsJsonAsync("http://localhost:7245/graphql", query);
+        var response = await Http.PostAsJsonAsync("http://localhost:7245/api/graphql", query);
         if (response.IsSuccessStatusCode)
         {
             var result = await response.Content.ReadFromJsonAsync<DynamicGraphQLResponse>();
