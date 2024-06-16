@@ -20,60 +20,54 @@
 
 <div id="signup">
     <div class="container">
-        <EditForm Model="Input" asp-route-returnUrl="@ReturnUrl" method="post" OnValidSubmit="RegisterUser" FormName="register" class="signup-editForm">
+        <EditForm Model="Input" OnValidSubmit="RegisterUser" class="signup-editForm">
             <DataAnnotationsValidator />
             <h2>Create a new account.</h2>
-            
+
             <ValidationSummary class="text-danger" role="alert" />
             <div class="form-signup">
+                <div id="form-firstname">
+                    <InputText @bind-Value="Input.FirstName" class="form-control input-group" autocomplete="givenname" aria-required="true" placeholder="First name" />
+                    <label for="first-name">First Name</label>
+                    <ValidationMessage For="() => Input.FirstName" class="text-danger" />
+                </div>
 
-                 <div  id="form-firstname">
-                     <InputText @bind-Value="Input.FirstName" class="form-control input-group" autocomplete="givenname" aria-required="true" placeholder="First name" />  
-                     <label for="first-name">First Name</label>
-                     <ValidationMessage For="() => Input.FirstName" class="text-danger" />
-                 </div>
+                <div id="form-lastname">
+                    <InputText @bind-Value="Input.LastName" class="form-control input-group" autocomplete="familyname" aria-required="true" placeholder="Last name" />
+                    <label for="last-name">Last Name</label>
+                    <ValidationMessage For="() => Input.LastName" class="text-danger" />
+                </div>
 
-                 <div  id="form-lastname">
-                        <InputText @bind-Value="Input.LastName" class="form-control input-group" autocomplete="familyname" aria-required="true" placeholder="Last name" />
-                        <label for="last-name">Last Name</label>
-                        <ValidationMessage For="() => Input.LastName" class="text-danger" />
-                 </div>
-
-                 <div  id="form-email">
-                     <InputText @bind-Value="Input.Email" class="form-control input-group " autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                     <label for="email">Email</label>
-                     <ValidationMessage For="() => Input.Email" class="text-danger" />
-                 </div>
-                 <div  id="form-password">
-                     <InputText type="password" @bind-Value="Input.Password" class="form-control input-group" autocomplete="new-password" aria-required="true" placeholder="password" />
-                     <label for="password">Password</label>
-                     <ValidationMessage For="() => Input.Password" class="text-danger" />
-                 </div>
-                 <div  id="form-confirm">
-                     <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control input-group" autocomplete="new-password" aria-required="true" placeholder="password" />
-                     <label for="confirm-password">Confirm Password</label>
-                     <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
-                 </div>
+                <div id="form-email">
+                    <InputText @bind-Value="Input.Email" class="form-control input-group" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label for="email">Email</label>
+                    <ValidationMessage For="() => Input.Email" class="text-danger" />
+                </div>
+                <div id="form-password">
+                    <InputText type="password" @bind-Value="Input.Password" class="form-control input-group" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <label for="password">Password</label>
+                    <ValidationMessage For="() => Input.Password" class="text-danger" />
+                </div>
+                <div id="form-confirm">
+                    <InputText type="password" @bind-Value="Input.ConfirmPassword" class="form-control input-group" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <label for="confirm-password">Confirm Password</label>
+                    <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
+                </div>
             </div>
             <button type="submit" class="form-submit btn btn-lg btn-primary">Register</button>
-
         </EditForm>
     </div>
-
 </div>
 
 @code {
+    private InputModel Input { get; set; } = new InputModel();
 
-    [SupplyParameterFromForm]
-    private InputModel Input { get; set; } = new();
-
-    [SupplyParameterFromQuery]
-    private string? ReturnUrl { get; set; }
-
+    [Parameter]
+    public string? ReturnUrl { get; set; }
 
     public async Task RegisterUser(EditContext editContext)
     {
-        var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, };
+        var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
 
         var result = await UserManager.CreateAsync(user, Input.Password);
 
@@ -91,11 +85,7 @@
         NavigationManager.NavigateTo(ReturnUrl ?? "/");
     }
 
-
-
-
-
-    private sealed class InputModel
+    public class InputModel
     {
         [Required]
         [EmailAddress]
@@ -114,8 +104,12 @@
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = "";
 
+        [Required]
+        [Display(Name = "First Name", Prompt = "Enter your first name")]
+        public string FirstName { get; set; } = "";
 
+        [Required]
+        [Display(Name = "Last Name", Prompt = "Enter your last name")]
+        public string LastName { get; set; } = "";
     }
 }
-
-
